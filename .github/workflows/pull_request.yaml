@@ -1,0 +1,15 @@
+name: pull request
+
+on: pull_request
+
+env:
+  TESTING_SECRET_STRING: ${{ secrets.TESTING_SECRET_STRING }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "TESTING_SECRET_STRING value is: ${TESTING_SECRET_STRING}"
