@@ -12,6 +12,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - name: Check access
+        if: ${{ github.event.pull_request.author_association != 'COLLABORATOR' && github.event.pull_request.author_association != 'OWNER' }}
+        run: |
+          echo "Event not triggered by a collaborator."
+          exit 1
       - name: Run tests
         run: |
           echo "TESTING_SECRET_STRING value is: ${TESTING_SECRET_STRING}"
