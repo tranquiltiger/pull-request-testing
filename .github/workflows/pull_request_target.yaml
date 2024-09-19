@@ -6,7 +6,7 @@ env:
   TESTING_SECRET_STRING: ${{ secrets.TESTING_SECRET_STRING }}
 
 jobs:
-  test:
+  CheckUserPermission:
     runs-on: ubuntu-latest
     steps:
       - name: Get User Permission
@@ -24,6 +24,10 @@ jobs:
           echo "Current permission level is ${{ steps.checkAccess.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
           exit 1
+  RunTest:
+    runs-on: ubuntu-latest
+    needs: CheckUserPermission
+    steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
