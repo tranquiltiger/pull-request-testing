@@ -9,16 +9,21 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
       - name: Check access
         if: ${{ github.event.pull_request.author_association != 'COLLABORATOR' && github.event.pull_request.author_association != 'OWNER' }}
         run: |
           echo "Event not triggered by a collaborator."
           exit 1
-      - name: Run tests
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Test
         run: |
-          echo "TESTING_SECRET_STRING value is: ${TESTING_SECRET_STRING}"
+          if [[ "x${{ secrets.TESTING_SECRET_STRING }}" == "xtesting-value" ]]; then
+            echo "Access to secrets"
+          else
+            echo "No access to secrets"
+            exit 1
+          fi
       - name: Readme
         run: cat README.md
