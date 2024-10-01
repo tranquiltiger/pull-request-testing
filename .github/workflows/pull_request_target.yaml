@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get User Permission
-        id: checkAccess
+        id: checkUserPermission
         uses: actions-cool/check-user-permission@v2
         with:
           require: write
@@ -18,12 +18,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check User Permission
-        if: steps.checkAccess.outputs.require-result == 'false'
-        run: |
-          echo "${{ github.triggering_actor }} does not have permissions on this repo."
-          echo "Current permission level is ${{ steps.checkAccess.outputs.user-permission }}"
-          echo "Job originally triggered by ${{ github.actor }}"
-          exit 1
+        if: steps.checkUserPermission.outputs.require-result == 'false'
+        id: slack
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "event_name": "${{ github.event_name }}",
+              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              "actor": "${{ github.actor }} attempted to run the workflow, but does not have the required permission.",
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   RunTest:
     runs-on: ubuntu-latest
     needs: CheckUserPermission
