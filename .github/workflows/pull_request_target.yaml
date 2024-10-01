@@ -25,7 +25,7 @@ jobs:
           payload: |
             {
               "event_name": "${{ github.event_name }}",
-              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
               "actor": "${{ github.actor }} attempted to run the workflow, but does not have the required permission.",
             }
         env:
