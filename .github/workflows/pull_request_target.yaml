@@ -24,7 +24,7 @@ jobs:
         with:
           payload: |
             {
-              "GH_USER": "${{github.actor}}",
+              "MESSAGE": "${{github.actor}} opened a PR from a fork and needs a retry run, please click the link below and rerun the jobs.",
               "GHA_LINK": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
             }
         env:
