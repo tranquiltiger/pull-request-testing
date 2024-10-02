@@ -32,6 +32,8 @@ jobs:
       - name: Add comment to add helpful context for new contributors
         if: steps.checkUserPermission.outputs.require-result == 'false'
         uses: thollander/actions-comment-pull-request@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           message: |
             Thanks for the PR @${{github.actor}} :wave:
