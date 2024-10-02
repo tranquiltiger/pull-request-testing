@@ -20,12 +20,12 @@ jobs:
       - name: Check User Permission
         if: steps.checkUserPermission.outputs.require-result == 'false'
         id: slack
-        uses: slackapi/slack-github-action@v1.24.0
+        uses: slackapi/slack-github-action@v1.27.0
         with:
           payload: |
             {
-              "event_name": "${{ github.event_name }}",
-              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              "GH_USR": "${{github.actor}}",
+              "GHA_LINK": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
