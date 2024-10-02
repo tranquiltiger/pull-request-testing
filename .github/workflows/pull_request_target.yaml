@@ -31,10 +31,9 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Add comment to add helpful context for new contributors
         if: steps.checkUserPermission.outputs.require-result == 'false'
-        uses: actions/first-interaction@v1
+        uses: thollander/actions-comment-pull-request@v2
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pr-message: |-
+          message: |
             Thanks for the PR @${{github.actor}} :wave:
 
             Our GitHub actions pipelines require a user with write permissions to retry the failed jobs. We've sent a message to a maintainer to review your PR. Please be patient and we'll get back to you as soon as possible.
