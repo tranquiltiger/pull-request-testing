@@ -29,7 +29,6 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
       - name: Add comment to add helpful context for new contributors
         if: steps.checkUserPermission.outputs.require-result == 'false'
         uses: actions/first-interaction@v1
