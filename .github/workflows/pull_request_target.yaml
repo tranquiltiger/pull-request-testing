@@ -35,6 +35,7 @@ jobs:
         if: steps.checkUserPermission.outputs.require-result == 'false'
         uses: thollander/actions-comment-pull-request@v2.5.0
         with:
+          comment_tag: execution
           message: |
             Thanks for the PR @${{github.actor}} :wave:
 
