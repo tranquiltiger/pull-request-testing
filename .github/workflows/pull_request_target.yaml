@@ -7,6 +7,8 @@ env:
 
 jobs:
   CheckUserPermission:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Get User Permission
@@ -29,11 +31,9 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Add comment to add helpful context for new contributors
+      - name: Add comment to add helpful context for contributors
         if: steps.checkUserPermission.outputs.require-result == 'false'
-        uses: thollander/actions-comment-pull-request@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: thollander/actions-comment-pull-request@v2.5.0
         with:
           message: |
             Thanks for the PR @${{github.actor}} :wave:
