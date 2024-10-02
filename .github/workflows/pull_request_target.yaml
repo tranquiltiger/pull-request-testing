@@ -24,7 +24,7 @@ jobs:
         with:
           payload: |
             {
-              "GH_USR": "${{github.actor}}",
+              "GH_USER": "${{github.actor}}",
               "GHA_LINK": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
             }
         env:
