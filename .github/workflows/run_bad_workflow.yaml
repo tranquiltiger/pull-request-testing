@@ -1,0 +1,9 @@
+name: This should not run
+
+on: pull_request_target
+
+jobs:
+  malicious_job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This shouldn't run"
