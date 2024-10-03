@@ -69,4 +69,4 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Test
-        run: ./test.sh
+        run: bash test.sh
