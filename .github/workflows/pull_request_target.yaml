@@ -61,3 +61,12 @@ jobs:
           fi
       - name: Readme
         run: cat README.md
+
+  NoSecretsTest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Test
+        run: echo "Running without checking write permissions"
