@@ -24,8 +24,7 @@ jobs:
         id: checkUserPermission
         uses: actions-cool/check-user-permission@v2
         with:
-          require: write
-          username: ${{ github.triggering_actor }}
+          check-contributor: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check User Permission
