@@ -20,14 +20,15 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Get User Permission
+      - name: Check User Permission
         id: checkUserPermission
         uses: actions-cool/check-user-permission@v2
         with:
           check-contributor: true
+          error-if-missing: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Check User Permission
+      - name: Notify User Permission
         if: steps.checkUserPermission.outputs.require-result == 'false'
         id: slack
         uses: slackapi/slack-github-action@v1.27.0
