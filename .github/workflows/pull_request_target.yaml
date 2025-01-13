@@ -26,7 +26,7 @@ jobs:
         with:
           check-contributor: true
           error-if-missing: true
-          username: ${{ github.actor }}
+          username: ${{ github.triggering_actor }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Notify User Permission
