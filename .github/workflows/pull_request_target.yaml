@@ -24,12 +24,13 @@ jobs:
         id: checkUserPermission
         uses: actions-cool/check-user-permission@v2
         with:
+          check-bot: true
           require: write
           username: ${{ github.triggering_actor }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Notify User Permission
-        if: steps.checkUserPermission.outputs.require-result == 'false'
+        if: steps.checkUserPermission.outputs.require-result == 'false' && steps.checkUserPermission.outputs.check-result == 'false'
         id: slack
         uses: slackapi/slack-github-action@v1.27.0
         with:
@@ -41,7 +42,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Add comment to add helpful context for contributors
-        if: steps.checkUserPermission.outputs.require-result == 'false'
+        if: steps.checkUserPermission.outputs.require-result == 'false' && steps.checkUserPermission.outputs.check-result == 'false'
         uses: thollander/actions-comment-pull-request@v2.5.0
         with:
           comment_tag: execution
@@ -50,7 +51,7 @@ jobs:
 
             Our GitHub actions pipelines require a user with write permissions to retry the failed jobs. We've sent a message to a maintainer to review your PR. Please be patient and we'll get back to you as soon as possible.
       - name: Fail if No Write Permission
-        if: steps.checkUserPermission.outputs.require-result == 'false'
+        if: steps.checkUserPermission.outputs.require-result == 'false' && steps.checkUserPermission.outputs.check-result == 'false'
         run: exit 1
 
   RunTest:
