@@ -1,6 +1,3 @@
 # pull-request-testing
 
 ## Subhead
-
-
-
